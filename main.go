@@ -16,6 +16,11 @@ func main() {
 	r := gin.Default()
 
 	r.POST("/notes", controllers.CreateNotes)
-
+	r.GET("/notes", controllers.AllNotes)
+	r.GET("/notes/:id", controllers.SingleNote)
+	r.PUT("/notes/:id", controllers.UpdateNote)
+	r.DELETE("/notes/:id", controllers.DeleteNote)
+	
+	
 	r.Run()
 }

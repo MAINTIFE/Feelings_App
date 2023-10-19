@@ -30,8 +30,67 @@ func CreateNotes(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{
-		"post": note,
+		"note": note,
 	})
 }
 
-// "The First Record of My Feelings"
+func AllNotes(c *gin.Context) {
+	// Get all the note records
+	var notes []models.Feelings
+	initializers.DB.Find(&notes)
+
+	//respond with them
+	c.JSON(200, gin.H{
+		"notes": notes,
+	})
+}
+
+func SingleNote(c *gin.Context) {
+	// Get all the note records
+	id := c.Param("id")
+	var note models.Feelings
+	initializers.DB.First(&note, id)
+
+	//respond with them
+	c.JSON(200, gin.H{
+		"notes": note,
+	})
+}
+
+func UpdateNote(c *gin.Context) {
+	// Get all the note records
+	id := c.Param("id")
+	var note models.Feelings
+	initializers.DB.First(&note, id)
+
+	//get data off req body
+	var body struct {
+		Title    string
+		Body     string
+		ImageUrl string
+	}
+	c.Bind(&body)
+
+	//update it
+	initializers.DB.Model(&note).Updates(models.Feelings{
+		Title:    body.Title,
+		Body:     body.Body,
+		Date:     time.Now().UTC(),
+		ImageUrl: body.ImageUrl,
+	})
+
+	//respond with them
+	c.JSON(200, gin.H{
+		"notes": note,
+	})
+}
+
+func DeleteNote(c *gin.Context) {
+	// Get all the note records
+	id := c.Param("id")
+	initializers.DB.Delete(&models.Feelings{}, id)
+	
+
+	//respond with them
+	c.Status(200)
+}
