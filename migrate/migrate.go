@@ -11,5 +11,8 @@ func init() {
 }
 
 func main() {
+	// initializers.DB.Migrator().DropTable(
+	// 	models.Feelings{},
+	// )
 	initializers.DB.AutoMigrate(&models.Feelings{})
 }

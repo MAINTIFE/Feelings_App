@@ -2,7 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	initializers "github.com/themaintife/feelings/initializers"
+	"github.com/themaintife/feelings/controllers"
+	"github.com/themaintife/feelings/initializers"
 )
 
 func init() {
@@ -14,11 +15,7 @@ func main() {
 
 	r := gin.Default()
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	r.POST("/notes", controllers.CreateNotes)
 
 	r.Run()
 }
